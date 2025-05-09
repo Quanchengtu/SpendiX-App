@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'welcome_page.dart';  // 確保 welcome_page.dart 在同一個資料夾中
-//import 'add_transaction_modal2.dart';
-//import 'add_transaction_modal_scrollable.dart';
-//import 'add_transaction_modal_styled.dart';
+
 import 'add_transaction_modal_with_icons.dart';
 import 'chatbot_page.dart';
-//import 'transaction_history_page.dart';
+
 import 'transaction_page_history_update.dart';
 import 'settings_page.dart';
 import 'analysis_page.dart';

@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../database/database_helper.dart';
 import '../models/transaction_model.dart';
-//import 'personality_analysis_page.dart'; // ⬅️ 新增這行
+
 import 'personality_analysis_page_updated.dart';
 import 'savings_progress_page.dart';
 
