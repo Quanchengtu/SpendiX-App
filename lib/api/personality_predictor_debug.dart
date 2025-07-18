@@ -24,20 +24,18 @@ class PersonalityResult {
 
   factory PersonalityResult.fromJson(Map<String, dynamic> json) {
     return PersonalityResult(
-      type: '',  // 不顯示 cluster
+      type: '', // 不顯示 cluster
       name: json['persona'] ?? '未知角色',
       suggestion: json['suggestion'] ?? '暫無建議',
     );
   }
-
 }
 
 class PersonalityApiClient {
   //static const String _baseUrl = 'https://your-api-url.onrender.com/predict'; // TODO: 改成實際 URL
   //static const String _baseUrl = 'https://ai-fintech-apis.onrender.com/predict';
-  static const String _baseUrl = 'https://ai-fintech-apis.onrender.com/predict/';
-
-
+  static const String _baseUrl =
+      'https://ai-fintech-apis.onrender.com/predict/';
 
   Future<PersonalityResult?> predictPersonality({
     required double food,
@@ -63,13 +61,12 @@ class PersonalityApiClient {
     // };
 
     final payload = {
-      'Food': food ?? 0.0,
-      'Transport': transport ?? 0.0,
-      'Entertainment': entertainment ?? 0.0,
-      'Grocery': grocery ?? 0.0,
-      'Others': others ?? 0.0,
+      'Food': food,
+      'Transport': transport,
+      'Entertainment': entertainment,
+      'Grocery': grocery,
+      'Others': others,
     };
-
 
     try {
       //print('🚀 傳送 payload: \${jsonEncode(payload)}');
@@ -84,7 +81,6 @@ class PersonalityApiClient {
       if (response.statusCode == 200) {
         print('✅ 成功取得回應：${response.body}');
         print(utf8.decode(response.bodyBytes)); // ← 印出整段解過的 UTF-8
-
 
         //final data = jsonDecode(response.body);
         final decoded = utf8.decode(response.bodyBytes);

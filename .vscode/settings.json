@@ -1,0 +1,9 @@
+// {
+//     "java.configuration.updateBuildConfiguration": "interactive",
+//     "dart.flutterSdkPath": "~/development/flutter"
+// }
+
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "dart.flutterSdkPath": "/Users/tuquancheng/development/flutter"
+}

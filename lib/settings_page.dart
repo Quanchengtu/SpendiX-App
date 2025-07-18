@@ -1,7 +1,7 @@
 // lib/pages/settings_page.dart
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 import '../database/database_helper.dart';
 import '../models/transaction_model.dart';
 
@@ -12,11 +12,18 @@ class SettingsPage extends StatelessWidget {
     final db = DatabaseHelper();
     final random = Random();
 
-    final expenseCategories = ['Food', 'Transport', 'Entertainment', 'Grocery', 'Others'];
+    final expenseCategories = [
+      'Food',
+      'Transport',
+      'Entertainment',
+      'Grocery',
+      'Others',
+    ];
     final incomeCategories = ['薪資', '投資', '獎金', '其他'];
 
     final List<TransactionModel> fakeExpenses = List.generate(30, (index) {
-      final category = expenseCategories[random.nextInt(expenseCategories.length)];
+      final category =
+          expenseCategories[random.nextInt(expenseCategories.length)];
       final amount = 50 + random.nextInt(200) + random.nextDouble();
       final note = '模擬支出 $index';
       final date = DateTime(2025, 3, random.nextInt(28) + 1);
@@ -31,7 +38,8 @@ class SettingsPage extends StatelessWidget {
     });
 
     final List<TransactionModel> fakeIncomes = List.generate(10, (index) {
-      final category = incomeCategories[random.nextInt(incomeCategories.length)];
+      final category =
+          incomeCategories[random.nextInt(incomeCategories.length)];
       final amount = 500 + random.nextInt(1500) + random.nextDouble();
       final note = '模擬收入 $index';
       final date = DateTime(2025, 3, random.nextInt(28) + 1);
@@ -52,9 +60,7 @@ class SettingsPage extends StatelessWidget {
 
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('✅ 已產生 40 筆假記帳資料（含收入與支出，2025 年 3 月）'),
-        ),
+        const SnackBar(content: Text('✅ 已產生 40 筆假記帳資料（含收入與支出，2025 年 3 月）')),
       );
     }
   }
@@ -64,8 +70,6 @@ class SettingsPage extends StatelessWidget {
     final result = await db.rawQuery("PRAGMA table_info(transactions);");
     print("📄 資料表欄位結構：$result");
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +96,9 @@ class SettingsPage extends StatelessWidget {
               backgroundColor: Colors.brown[600],
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
           ),
         ),

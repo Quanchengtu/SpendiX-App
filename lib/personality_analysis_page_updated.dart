@@ -9,7 +9,8 @@ class PersonalityAnalysisPage extends StatefulWidget {
   const PersonalityAnalysisPage({super.key, required this.selectedMonth});
 
   @override
-  State<PersonalityAnalysisPage> createState() => _PersonalityAnalysisPageState();
+  State<PersonalityAnalysisPage> createState() =>
+      _PersonalityAnalysisPageState();
 }
 
 class _PersonalityAnalysisPageState extends State<PersonalityAnalysisPage> {
@@ -25,12 +26,19 @@ class _PersonalityAnalysisPageState extends State<PersonalityAnalysisPage> {
   Future<void> _analyzePersonalityFromSelectedMonth() async {
     setState(() => _isLoading = true);
 
-    final transactions = await DatabaseHelper().getAllTransactions();
-    final targetTxns = transactions.where((txn) =>
-    txn.date.year == widget.selectedMonth.year &&
-        txn.date.month == widget.selectedMonth.month &&
-        txn.isExpense
-    ).toList();
+    //final transactions = await DatabaseHelper().getAllTransactions();
+    final List<TransactionModel> transactions =
+        await DatabaseHelper().getTransactions();
+
+    final targetTxns =
+        transactions
+            .where(
+              (txn) =>
+                  txn.date.year == widget.selectedMonth.year &&
+                  txn.date.month == widget.selectedMonth.month &&
+                  txn.isExpense,
+            )
+            .toList();
 
     final Map<String, double> sums = {
       'food': 0,
@@ -87,11 +95,17 @@ class _PersonalityAnalysisPageState extends State<PersonalityAnalysisPage> {
         const SizedBox(height: 10),
         Text(
           _result!.name,
-          style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.brown),
+          style: const TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: Colors.brown,
+          ),
         ),
         const SizedBox(height: 30),
         Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           elevation: 4,
           margin: const EdgeInsets.symmetric(horizontal: 8),
           child: Padding(
@@ -100,7 +114,11 @@ class _PersonalityAnalysisPageState extends State<PersonalityAnalysisPage> {
               children: [
                 const Text(
                   '個性描述',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.brown),
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.brown,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
@@ -114,7 +132,9 @@ class _PersonalityAnalysisPageState extends State<PersonalityAnalysisPage> {
         ),
         const SizedBox(height: 24),
         Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           elevation: 4,
           margin: const EdgeInsets.symmetric(horizontal: 8),
           child: Padding(
@@ -123,7 +143,11 @@ class _PersonalityAnalysisPageState extends State<PersonalityAnalysisPage> {
               children: [
                 const Text(
                   '系統建議',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.brown),
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.brown,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
@@ -148,14 +172,15 @@ class _PersonalityAnalysisPageState extends State<PersonalityAnalysisPage> {
         backgroundColor: Colors.brown[700],
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _result == null
-          ? const Center(child: Text('分析失敗，請稍後再試'))
-          : SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: _buildPersonalityContent(),
-      ),
+      body:
+          _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : _result == null
+              ? const Center(child: Text('分析失敗，請稍後再試'))
+              : SingleChildScrollView(
+                padding: const EdgeInsets.all(24.0),
+                child: _buildPersonalityContent(),
+              ),
     );
   }
 }

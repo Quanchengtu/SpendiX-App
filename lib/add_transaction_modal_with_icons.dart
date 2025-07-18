@@ -65,20 +65,21 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
         if (input > amount) {
           showCupertinoDialog(
             context: context,
-            builder: (_) => CupertinoAlertDialog(
-              title: Text('錯誤'),
-              content: Text('儲蓄金額不能超過收入金額'),
-              // actions: [
-              //   CupertinoDialogAction(isDefaultAction: true, child: Text('OK')),
-              // ],
-              actions: [
-                CupertinoDialogAction(
-                  isDefaultAction: true,
-                  child: const Text('OK'),
-                  onPressed: () => Navigator.of(context).pop(),
+            builder:
+                (_) => CupertinoAlertDialog(
+                  title: Text('錯誤'),
+                  content: Text('儲蓄金額不能超過收入金額'),
+                  // actions: [
+                  //   CupertinoDialogAction(isDefaultAction: true, child: Text('OK')),
+                  // ],
+                  actions: [
+                    CupertinoDialogAction(
+                      isDefaultAction: true,
+                      child: const Text('OK'),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
                 ),
-              ],
-            ),
           );
           return;
         }
@@ -92,7 +93,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
       amount: amount,
       note: noteController.text,
       date: selectedDate,
-      isSaved: addToSavingPlan,
+      isSaving: addToSavingPlan,
       savingAmount: savingAmount,
     );
 
@@ -101,17 +102,20 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
     if (addToSavingPlan && !isExpense) {
       await showCupertinoDialog(
         context: context,
-        builder: (_) => CupertinoAlertDialog(
-          title: const Text('✅ 儲蓄成功'),
-          content: Text('已成功加入儲蓄計劃\n儲蓄金額：\$${savingAmount.toStringAsFixed(0)}'),
-          actions: [
-            CupertinoDialogAction(
-              isDefaultAction: true,
-              child: const Text('OK'),
-              onPressed: () => Navigator.pop(context),
-            )
-          ],
-        ),
+        builder:
+            (_) => CupertinoAlertDialog(
+              title: const Text('✅ 儲蓄成功'),
+              content: Text(
+                '已成功加入儲蓄計劃\n儲蓄金額：\$${savingAmount.toStringAsFixed(0)}',
+              ),
+              actions: [
+                CupertinoDialogAction(
+                  isDefaultAction: true,
+                  child: const Text('OK'),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
       );
     }
 
@@ -220,13 +224,17 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
                                 ChoiceChip(
                                   label: const Text('% 數'),
                                   selected: usePercentage,
-                                  onSelected: (val) => setState(() => usePercentage = true),
+                                  onSelected:
+                                      (val) =>
+                                          setState(() => usePercentage = true),
                                 ),
                                 const SizedBox(width: 8),
                                 ChoiceChip(
                                   label: const Text('自訂金額'),
                                   selected: !usePercentage,
-                                  onSelected: (val) => setState(() => usePercentage = false),
+                                  onSelected:
+                                      (val) =>
+                                          setState(() => usePercentage = false),
                                 ),
                               ],
                             ),
@@ -234,14 +242,19 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
                             if (usePercentage)
                               Column(
                                 children: [
-                                  Text('儲蓄比例：${sliderValue.toStringAsFixed(0)}%', style: const TextStyle(fontSize: 16)),
+                                  Text(
+                                    '儲蓄比例：${sliderValue.toStringAsFixed(0)}%',
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
                                   Slider(
                                     value: sliderValue,
                                     min: 0,
                                     max: 100,
                                     divisions: 100,
                                     label: sliderValue.toStringAsFixed(0),
-                                    onChanged: (value) => setState(() => sliderValue = value),
+                                    onChanged:
+                                        (value) =>
+                                            setState(() => sliderValue = value),
                                   ),
                                 ],
                               )
@@ -251,7 +264,9 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
                                   labelText: '儲蓄金額（不得超過收入）',
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
                               ),
                             const SizedBox(height: 24),
@@ -267,33 +282,40 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
-                  children: categories.entries.map((entry) {
-                    return GestureDetector(
-                      onTap: () => setState(() => selectedCategory = entry.key),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: selectedCategory == entry.key ? Colors.brown[100] : Colors.grey[200],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(entry.value, size: 30),
-                            const SizedBox(height: 4),
-                            Text(
-                              entry.key,
-                              style: TextStyle(
-                                fontSize: entry.key == 'Entertainment' ? 10 : 12,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
+                  children:
+                      categories.entries.map((entry) {
+                        return GestureDetector(
+                          onTap:
+                              () =>
+                                  setState(() => selectedCategory = entry.key),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  selectedCategory == entry.key
+                                      ? Colors.brown[100]
+                                      : Colors.grey[200],
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(entry.value, size: 30),
+                                const SizedBox(height: 4),
+                                Text(
+                                  entry.key,
+                                  style: TextStyle(
+                                    fontSize:
+                                        entry.key == 'Entertainment' ? 10 : 12,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: false,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
                 ),
                 const SizedBox(height: 20),
 
@@ -301,7 +323,9 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
                 Row(
                   children: [
                     Expanded(
-                      child: Text('日期：${DateFormat.yMMMd().format(selectedDate)}'),
+                      child: Text(
+                        '日期：${DateFormat.yMMMd().format(selectedDate)}',
+                      ),
                     ),
                     IconButton(
                       onPressed: _pickDate,
@@ -315,11 +339,16 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
                 TextField(
                   controller: amountController,
                   keyboardType: TextInputType.number,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                   decoration: InputDecoration(
                     prefixText: "\$ ",
                     labelText: "金額",
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -330,7 +359,9 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
                   maxLines: 2,
                   decoration: InputDecoration(
                     labelText: "備註",
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -343,9 +374,14 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.brown[700],
                       padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                    child: const Text("確認", style: TextStyle(color: Colors.white, fontSize: 16)),
+                    child: const Text(
+                      "確認",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
                   ),
                 ),
               ],
@@ -356,7 +392,12 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
     );
   }
 
-  Widget _buildToggleButton(String label, bool selected, VoidCallback onTap, {required Color activeColor}) {
+  Widget _buildToggleButton(
+    String label,
+    bool selected,
+    VoidCallback onTap, {
+    required Color activeColor,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -376,7 +417,13 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
     );
   }
 
-  Widget _buildToggleButtonWithIcon({required IconData icon, required String label, required bool selected, required VoidCallback onTap, required Color activeColor}) {
+  Widget _buildToggleButtonWithIcon({
+    required IconData icon,
+    required String label,
+    required bool selected,
+    required VoidCallback onTap,
+    required Color activeColor,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -387,7 +434,11 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
         ),
         child: Row(
           children: [
-            Icon(icon, color: selected ? Colors.white : Colors.black87, size: 18),
+            Icon(
+              icon,
+              color: selected ? Colors.white : Colors.black87,
+              size: 18,
+            ),
             const SizedBox(width: 6),
             Text(
               label,

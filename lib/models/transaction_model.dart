@@ -1,5 +1,3 @@
-// lib/models/transaction_model.dart
-/*
 class TransactionModel {
   final int? id;
   final String category;
@@ -7,50 +5,7 @@ class TransactionModel {
   final double amount;
   final String note;
   final DateTime date;
-
-  TransactionModel({
-    this.id,
-    required this.category,
-    required this.isExpense,
-    required this.amount,
-    required this.note,
-    required this.date,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'category': category,
-      'isExpense': isExpense ? 1 : 0,
-      'amount': amount,
-      'note': note,
-      'date': date.toIso8601String(),
-    };
-  }
-
-  factory TransactionModel.fromMap(Map<String, dynamic> map) {
-    return TransactionModel(
-      id: map['id'],
-      category: map['category'],
-      isExpense: map['isExpense'] == 1,
-      amount: map['amount'],
-      note: map['note'],
-      date: DateTime.parse(map['date']),
-    );
-  }
-}
-*/
-
-class TransactionModel {  //目前採用的（包含儲蓄）
-  final int? id;
-  final String category;
-  final bool isExpense;
-  final double amount;
-  final String note;
-  final DateTime date;
-
-  // 新增
-  final bool isSaved;
+  final bool isSaving;
   final double savingAmount;
 
   TransactionModel({
@@ -60,7 +15,7 @@ class TransactionModel {  //目前採用的（包含儲蓄）
     required this.amount,
     required this.note,
     required this.date,
-    this.isSaved = false,
+    this.isSaving = false,
     this.savingAmount = 0.0,
   });
 
@@ -72,9 +27,9 @@ class TransactionModel {  //目前採用的（包含儲蓄）
       'amount': amount,
       'note': note,
       'date': date.toIso8601String(),
-      'isSaved': isSaved ? 1 : 0,
+      'isSaving': isSaving ? 1 : 0,
       'savingAmount': savingAmount,
-    };
+    }..removeWhere((key, value) => value == null);
   }
 
   factory TransactionModel.fromMap(Map<String, dynamic> map) {
@@ -85,8 +40,8 @@ class TransactionModel {  //目前採用的（包含儲蓄）
       amount: map['amount'],
       note: map['note'],
       date: DateTime.parse(map['date']),
-      isSaved: map['isSaved'] == 1,
-      savingAmount: map['savingAmount'] ?? 0.0,
+      isSaving: map['isSaving'] == 1,
+      savingAmount: map['savingAmount'],
     );
   }
 }

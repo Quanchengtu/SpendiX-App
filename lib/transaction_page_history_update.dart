@@ -34,7 +34,7 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
   }
 
   void _loadTransactions() {
-    _transactions = DatabaseHelper().getAllTransactions();
+    _transactions = DatabaseHelper().getTransactions();
   }
 
   Future<void> _deleteTransaction(int id) async {
@@ -80,30 +80,44 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                   children: const [
                     Icon(Icons.info_outline, size: 60, color: Colors.grey),
                     SizedBox(height: 10),
-                    Text("目前沒有任何記帳紀錄", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                    Text(
+                      "目前沒有任何記帳紀錄",
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                    ),
                   ],
                 ),
               );
             }
 
             final transactions = snapshot.data!;
-            final filteredTransactions = transactions.where((txn) =>
-              txn.date.year == _selectedMonth.year && txn.date.month == _selectedMonth.month).toList();
+            final filteredTransactions =
+                transactions
+                    .where(
+                      (txn) =>
+                          txn.date.year == _selectedMonth.year &&
+                          txn.date.month == _selectedMonth.month,
+                    )
+                    .toList();
 
             final totalExpense = filteredTransactions
-              .where((txn) => txn.isExpense)
-              .fold(0.0, (sum, txn) => sum + txn.amount);
+                .where((txn) => txn.isExpense)
+                .fold(0.0, (sum, txn) => sum + txn.amount);
             final totalIncome = filteredTransactions
-              .where((txn) => !txn.isExpense)
-              .fold(0.0, (sum, txn) => sum + txn.amount);
+                .where((txn) => !txn.isExpense)
+                .fold(0.0, (sum, txn) => sum + txn.amount);
 
             return Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: const BoxDecoration(
                     color: Colors.white,
-                    border: Border(bottom: BorderSide(color: Color(0xFFDDDDDD), width: 0.6)),
+                    border: Border(
+                      bottom: BorderSide(color: Color(0xFFDDDDDD), width: 0.6),
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,17 +127,26 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                         children: [
                           GestureDetector(
                             onTap: _selectPreviousMonth,
-                            child: const Icon(CupertinoIcons.chevron_left, size: 20),
+                            child: const Icon(
+                              CupertinoIcons.chevron_left,
+                              size: 20,
+                            ),
                           ),
                           const SizedBox(width: 8),
                           Text(
                             '${_selectedMonth.year}年 ${_selectedMonth.month}月',
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(width: 8),
                           GestureDetector(
                             onTap: _selectNextMonth,
-                            child: const Icon(CupertinoIcons.chevron_right, size: 20),
+                            child: const Icon(
+                              CupertinoIcons.chevron_right,
+                              size: 20,
+                            ),
                           ),
                         ],
                       ),
@@ -133,7 +156,11 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                         children: [
                           _buildSummaryItem('總支出', totalExpense, Colors.red),
                           _buildSummaryItem('總收入', totalIncome, Colors.green),
-                          _buildSummaryItem('結餘', totalIncome - totalExpense, Colors.brown),
+                          _buildSummaryItem(
+                            '結餘',
+                            totalIncome - totalExpense,
+                            Colors.brown,
+                          ),
                         ],
                       ),
                     ],
@@ -141,12 +168,20 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    padding: const EdgeInsets.only(top: 12, left: 12, right: 12, bottom: 24),
+                    padding: const EdgeInsets.only(
+                      top: 12,
+                      left: 12,
+                      right: 12,
+                      bottom: 24,
+                    ),
                     itemCount: filteredTransactions.length,
                     itemBuilder: (context, index) {
                       final txn = filteredTransactions[index];
-                      final amountColor = txn.isExpense ? Colors.red : Colors.green;
-                      final amountText = (txn.isExpense ? "- " : "+ ") + "\$${txn.amount.toStringAsFixed(0)}";
+                      final amountColor =
+                          txn.isExpense ? Colors.red : Colors.green;
+                      final amountText =
+                          (txn.isExpense ? "- " : "+ ") +
+                          "\$${txn.amount.toStringAsFixed(0)}";
 
                       return Dismissible(
                         key: Key(txn.id.toString()),
@@ -160,34 +195,62 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                         confirmDismiss: (_) async {
                           final confirm = await showCupertinoDialog<bool>(
                             context: context,
-                            builder: (context) => CupertinoAlertDialog(
-                              title: const Text("確認刪除", style: TextStyle(fontWeight: FontWeight.bold)),
-                              content: const Padding(
-                                padding: EdgeInsets.only(top: 8.0),
-                                child: Text("你確定要刪除這筆記帳紀錄嗎？", style: TextStyle(fontSize: 16)),
-                              ),
-                              actions: [
-                                CupertinoDialogAction(onPressed: () => Navigator.pop(context, false), child: const Text("取消")),
-                                CupertinoDialogAction(isDestructiveAction: true, onPressed: () => Navigator.pop(context, true), child: const Text("刪除")),
-                              ],
-                            ),
+                            builder:
+                                (context) => CupertinoAlertDialog(
+                                  title: const Text(
+                                    "確認刪除",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  content: const Padding(
+                                    padding: EdgeInsets.only(top: 8.0),
+                                    child: Text(
+                                      "你確定要刪除這筆記帳紀錄嗎？",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      onPressed:
+                                          () => Navigator.pop(context, false),
+                                      child: const Text("取消"),
+                                    ),
+                                    CupertinoDialogAction(
+                                      isDestructiveAction: true,
+                                      onPressed:
+                                          () => Navigator.pop(context, true),
+                                      child: const Text("刪除"),
+                                    ),
+                                  ],
+                                ),
                           );
                           return confirm ?? false;
                         },
                         onDismissed: (_) => _deleteTransaction(txn.id!),
                         child: Card(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           elevation: 3,
                           child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 16,
+                            ),
                             leading: Icon(
-                              txn.isExpense ? Icons.remove_circle : Icons.add_circle,
+                              txn.isExpense
+                                  ? Icons.remove_circle
+                                  : Icons.add_circle,
                               color: amountColor,
                             ),
                             //title: Text(txn.category, style: const TextStyle(fontWeight: FontWeight.bold)),
                             title: Text(
-                              categoryTranslations[txn.category] ?? txn.category,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              categoryTranslations[txn.category] ??
+                                  txn.category,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
 
                             subtitle: Column(
@@ -196,8 +259,13 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                                 Text(DateFormat.yMMMd().format(txn.date)),
                                 if (txn.note.isNotEmpty)
                                   Text(
-                                    txn.note.length > 20 ? txn.note.substring(0, 20) + '...' : txn.note,
-                                    style: const TextStyle(fontSize: 12, color: Colors.black54),
+                                    txn.note.length > 20
+                                        ? txn.note.substring(0, 20) + '...'
+                                        : txn.note,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black54,
+                                    ),
                                   ),
                               ],
                             ),
@@ -206,16 +274,27 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                               children: [
                                 Text(
                                   amountText,
-                                  style: TextStyle(fontSize: 18, color: amountColor, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: amountColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 const SizedBox(height: 4),
                                 GestureDetector(
                                   onTap: () => _editTransaction(txn),
-                                  child: const Icon(Icons.edit, size: 18, color: Colors.grey),
-                                )
+                                  child: const Icon(
+                                    Icons.edit,
+                                    size: 18,
+                                    color: Colors.grey,
+                                  ),
+                                ),
                               ],
                             ),
-                            onTap: txn.note.length > 20 ? () => _showFullNoteDialog(txn.note) : null,
+                            onTap:
+                                txn.note.length > 20
+                                    ? () => _showFullNoteDialog(txn.note)
+                                    : null,
                           ),
                         ),
                       );
@@ -233,11 +312,18 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
   Widget _buildSummaryItem(String label, double value, Color color) {
     return Column(
       children: [
-        Text(label, style: const TextStyle(fontSize: 14, color: Colors.black54)),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 14, color: Colors.black54),
+        ),
         const SizedBox(height: 4),
         Text(
           '\$${value.toStringAsFixed(0)}',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
         ),
       ],
     );
@@ -246,50 +332,62 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
   void _editTransaction(TransactionModel txn) {
     showCupertinoDialog(
       context: context,
-      builder: (_) => CupertinoAlertDialog(
-        title: const Text("尚未實作", style: TextStyle(fontWeight: FontWeight.bold)),
-        content: const Padding(
-          padding: EdgeInsets.only(top: 8.0),
-          child: Text("待實作編輯功能 🙂", style: TextStyle(fontSize: 16)),
-        ),
-        actions: [
-          Container(
-            decoration: const BoxDecoration(
-              border: Border(top: BorderSide(color: Color(0xFFDDDDDD), width: 0.6)),
+      builder:
+          (_) => CupertinoAlertDialog(
+            title: const Text(
+              "尚未實作",
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            child: CupertinoDialogAction(
-              isDefaultAction: true,
-              onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
+            content: const Padding(
+              padding: EdgeInsets.only(top: 8.0),
+              child: Text("待實作編輯功能 🙂", style: TextStyle(fontSize: 16)),
             ),
+            actions: [
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(color: Color(0xFFDDDDDD), width: 0.6),
+                  ),
+                ),
+                child: CupertinoDialogAction(
+                  isDefaultAction: true,
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('OK'),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
   void _showFullNoteDialog(String note) {
     showCupertinoDialog(
       context: context,
-      builder: (_) => CupertinoAlertDialog(
-        title: const Text("完整備註", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-        content: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Text(note, style: const TextStyle(fontSize: 16)),
-        ),
-        actions: [
-          Container(
-            decoration: const BoxDecoration(
-              border: Border(top: BorderSide(color: Color(0xFFDDDDDD), width: 0.6)),
+      builder:
+          (_) => CupertinoAlertDialog(
+            title: const Text(
+              "完整備註",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
-            child: CupertinoDialogAction(
-              isDefaultAction: true,
-              onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
+            content: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(note, style: const TextStyle(fontSize: 16)),
             ),
-          )
-        ],
-      ),
+            actions: [
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(color: Color(0xFFDDDDDD), width: 0.6),
+                  ),
+                ),
+                child: CupertinoDialogAction(
+                  isDefaultAction: true,
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('OK'),
+                ),
+              ),
+            ],
+          ),
     );
   }
 }

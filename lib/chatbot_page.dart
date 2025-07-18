@@ -26,10 +26,20 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
   Future<void> _initializeChat() async {
     try {
-      final transactions = await DatabaseHelper().getAllTransactions();
+      //final transactions = await DatabaseHelper().getAllTransactions();
+      final List<TransactionModel> transactions =
+          await DatabaseHelper().getTransactions();
+
       final now = DateTime.now();
-      final targetTxns = transactions.where((txn) =>
-      txn.date.year == now.year && txn.date.month == now.month && txn.isExpense).toList();
+      final targetTxns =
+          transactions
+              .where(
+                (txn) =>
+                    txn.date.year == now.year &&
+                    txn.date.month == now.month &&
+                    txn.isExpense,
+              )
+              .toList();
 
       final Map<String, double> sums = {
         'food': 0,
@@ -58,11 +68,13 @@ class _ChatBotPageState extends State<ChatBotPage> {
       );
 
       if (result == null) {
-        setState(() => _messages.add({
-          'role': 'bot',
-          'text': '⚠️ 消費人格分析失敗，請稍後再試',
-          'timestamp': DateTime.now(),
-        }));
+        setState(
+          () => _messages.add({
+            'role': 'bot',
+            'text': '⚠️ 消費人格分析失敗，請稍後再試',
+            'timestamp': DateTime.now(),
+          }),
+        );
         return;
       }
 
@@ -76,11 +88,13 @@ class _ChatBotPageState extends State<ChatBotPage> {
       setState(() => _initialized = true);
     } catch (e) {
       print('初始化錯誤：$e');
-      setState(() => _messages.add({
-        'role': 'bot',
-        'text': '⚠️ 初始化失敗，請稍後再試',
-        'timestamp': DateTime.now(),
-      }));
+      setState(
+        () => _messages.add({
+          'role': 'bot',
+          'text': '⚠️ 初始化失敗，請稍後再試',
+          'timestamp': DateTime.now(),
+        }),
+      );
     }
   }
 
@@ -96,7 +110,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'messages': [
-            {'role': 'user', 'message': '請幫我根據以下資訊規劃儲蓄建議'}
+            {'role': 'user', 'message': '請幫我根據以下資訊規劃儲蓄建議'},
           ],
           'persona': persona,
           'expenses': expenses,
@@ -110,16 +124,28 @@ class _ChatBotPageState extends State<ChatBotPage> {
         final data = jsonDecode(decoded);
         final reply = data['reply'] ?? '⚠️ AI 沒有回覆';
         setState(() {
-          _messages.add({'role': 'bot', 'text': reply, 'timestamp': DateTime.now()});
+          _messages.add({
+            'role': 'bot',
+            'text': reply,
+            'timestamp': DateTime.now(),
+          });
         });
       } else {
         setState(() {
-          _messages.add({'role': 'bot', 'text': '❌ 伺服器錯誤 (${response.statusCode})', 'timestamp': DateTime.now()});
+          _messages.add({
+            'role': 'bot',
+            'text': '❌ 伺服器錯誤 (${response.statusCode})',
+            'timestamp': DateTime.now(),
+          });
         });
       }
     } catch (e) {
       setState(() {
-        _messages.add({'role': 'bot', 'text': '❌ 無法連線到伺服器：$e', 'timestamp': DateTime.now()});
+        _messages.add({
+          'role': 'bot',
+          'text': '❌ 無法連線到伺服器：$e',
+          'timestamp': DateTime.now(),
+        });
       });
     }
   }
@@ -140,8 +166,8 @@ class _ChatBotPageState extends State<ChatBotPage> {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'messages': [
-            {'role': 'user', 'message': text}
-          ]
+            {'role': 'user', 'message': text},
+          ],
         }),
       );
 
@@ -150,16 +176,28 @@ class _ChatBotPageState extends State<ChatBotPage> {
         final data = jsonDecode(decoded);
         final reply = data['reply'] ?? '⚠️ AI 沒有回覆';
         setState(() {
-          _messages.add({'role': 'bot', 'text': reply, 'timestamp': DateTime.now()});
+          _messages.add({
+            'role': 'bot',
+            'text': reply,
+            'timestamp': DateTime.now(),
+          });
         });
       } else {
         setState(() {
-          _messages.add({'role': 'bot', 'text': '❌ 伺服器錯誤 (${response.statusCode})', 'timestamp': DateTime.now()});
+          _messages.add({
+            'role': 'bot',
+            'text': '❌ 伺服器錯誤 (${response.statusCode})',
+            'timestamp': DateTime.now(),
+          });
         });
       }
     } catch (e) {
       setState(() {
-        _messages.add({'role': 'bot', 'text': '❌ 無法連線到伺服器：$e', 'timestamp': DateTime.now()});
+        _messages.add({
+          'role': 'bot',
+          'text': '❌ 無法連線到伺服器：$e',
+          'timestamp': DateTime.now(),
+        });
       });
     }
   }
@@ -168,7 +206,9 @@ class _ChatBotPageState extends State<ChatBotPage> {
     if (index == 0) return true;
     final current = _messages[index]['timestamp'] as DateTime;
     final previous = _messages[index - 1]['timestamp'] as DateTime;
-    return current.day != previous.day || current.month != previous.month || current.year != previous.year;
+    return current.day != previous.day ||
+        current.month != previous.month ||
+        current.year != previous.year;
   }
 
   @override
@@ -200,16 +240,22 @@ class _ChatBotPageState extends State<ChatBotPage> {
                         child: Center(
                           child: Text(
                             DateFormat.yMMMd().format(timestamp),
-                            style: const TextStyle(color: Colors.grey, fontSize: 12),
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       ),
                     Align(
-                      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+                      alignment:
+                          isUser ? Alignment.centerRight : Alignment.centerLeft,
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 4),
                         padding: const EdgeInsets.all(12),
-                        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.75,
+                        ),
                         decoration: BoxDecoration(
                           color: isUser ? Colors.brown[300] : Colors.grey[300],
                           borderRadius: BorderRadius.only(
@@ -224,7 +270,9 @@ class _ChatBotPageState extends State<ChatBotPage> {
                           children: [
                             Text(
                               message['text'] ?? '',
-                              style: TextStyle(color: isUser ? Colors.white : Colors.black87),
+                              style: TextStyle(
+                                color: isUser ? Colors.white : Colors.black87,
+                              ),
                             ),
                             const SizedBox(height: 4),
                             Text(
