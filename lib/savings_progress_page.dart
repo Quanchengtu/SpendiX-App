@@ -32,9 +32,10 @@ class _SavingsProgressPageState extends State<SavingsProgressPage> {
 
   Future<void> _loadAndFetchAnalysis() async {
     final db = await DatabaseHelper().database;
+
     final List<Map<String, dynamic>> savedIncomeRecords = await db.query(
       'transactions',
-      where: 'isExpense = ? AND isSaved = ?',
+      where: 'isExpense = ? AND isSaving= ?',
       whereArgs: [0, 1],
     );
 

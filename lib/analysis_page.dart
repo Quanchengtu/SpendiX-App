@@ -10,6 +10,7 @@ import '../models/transaction_model.dart';
 
 import 'personality_analysis_page_updated.dart';
 import 'savings_progress_page.dart';
+//import 'savings_progress_page2.dart';
 
 class AnalysisPage extends StatefulWidget {
   const AnalysisPage({super.key});
@@ -186,71 +187,6 @@ class _AnalysisPageState extends State<AnalysisPage> {
                   ),
                   const SizedBox(height: 16),
 
-                  // ✅ 儲蓄進度預覽卡（放在分析區開頭）
-                  // FutureBuilder(
-                  //   future: http.post(
-                  //     Uri.parse('https://ai-fintech-apis.onrender.com/analyze'),
-                  //     headers: {"Content-Type": "application/json"},
-                  //     body: jsonEncode({
-                  //       "start_date": "2025-04-01",
-                  //       "end_date": "2025-07-01",
-                  //       "target_amount": 60000,
-                  //       "current_saved": 18000
-                  //     }),
-                  //   ),
-                  //   builder: (context, snapshot) {
-                  //     if (snapshot.connectionState == ConnectionState.waiting) {
-                  //       return const Center(child: CircularProgressIndicator());
-                  //     } else if (snapshot.hasError || snapshot.data?.statusCode != 200) {
-                  //       return const SizedBox.shrink();
-                  //     } else {
-                  //       final res = jsonDecode(snapshot.data!.body);
-                  //       final progress = (res['progress_ratio'] as num).toDouble() / 100.0;
-                  //       final ideal = ((res['expected_saved'] as num) / 60000).clamp(0.0, 1.0);
-                  //       final saved = (res['current_saved'] as num).toDouble();
-                  //
-                  //       return Card(
-                  //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  //         elevation: 3,
-                  //         child: Padding(
-                  //           padding: const EdgeInsets.all(16),
-                  //           child: Column(
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: [
-                  //               Text('🔍 儲蓄進度預覽', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.brown[700])),
-                  //               const SizedBox(height: 12),
-                  //               Text('目前進度：${res['progress_ratio']}% (NT\$${saved.toStringAsFixed(0)} / NT\$60000)'),
-                  //               const SizedBox(height: 8),
-                  //               ClipRRect(
-                  //                 borderRadius: BorderRadius.circular(10),
-                  //                 child: Column(
-                  //                   crossAxisAlignment: CrossAxisAlignment.start,
-                  //                   children: [
-                  //                     LinearProgressIndicator(
-                  //                       value: ideal,
-                  //                       minHeight: 10,
-                  //                       backgroundColor: Colors.transparent,
-                  //                       color: Colors.blue[300],
-                  //                     ),
-                  //                     const SizedBox(height: 2),
-                  //                     LinearProgressIndicator(
-                  //                       value: progress,
-                  //                       minHeight: 10,
-                  //                       backgroundColor: Colors.transparent,
-                  //                       color: Colors.green[400],
-                  //                     ),
-                  //                   ],
-                  //                 ),
-                  //               ),
-                  //               const SizedBox(height: 4),
-                  //               const Text('🔵 藍色為理想進度，🟢 綠色為實際進度'),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       );
-                  //     }
-                  //   },
-                  // ),
                   FutureBuilder<double>(
                     future: _calculateCurrentSaved(),
                     builder: (context, savedSnapshot) {
@@ -403,6 +339,13 @@ class _AnalysisPageState extends State<AnalysisPage> {
                         context,
                         MaterialPageRoute(
                           builder: (_) => const SavingsProgressPage(),
+                          // builder:
+                          //     (_) => SavingsProgressPage(
+                          //       currentSaved: 30000, // 實際數值替換
+                          //       targetAmount: 60000,
+                          //       remainingDays: 45,
+                          //       dailySuggestion: 200,
+                          //     ),
                         ),
                       );
                     },

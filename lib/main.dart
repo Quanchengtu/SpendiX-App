@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'welcome_page.dart';  // 確保 welcome_page.dart 在同一個資料夾中
+import 'welcome_page.dart'; // 確保 welcome_page.dart 在同一個資料夾中
 
 import 'add_transaction_modal_with_icons.dart';
 import 'chatbot_page.dart';
@@ -7,8 +7,6 @@ import 'chatbot_page.dart';
 import 'transaction_page_history_update.dart';
 import 'settings_page.dart';
 import 'analysis_page.dart';
-
-
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false, // 把左上角 debug 標籤移除
-      home: const WelcomePage(),         // 設定啟動畫面為 WelcomePage
+      home: const WelcomePage(), // 設定啟動畫面為 WelcomePage
     );
   }
 }
@@ -85,10 +83,7 @@ class _HomePageState extends State<HomePage> {
           //   top: false,
           //   child: AddTransactionModal(), // ✅ 這樣才能讓內部 DraggableScrollableSheet 運作正確
           // );
-          return const SafeArea(
-            top: false,
-            child: AddTransactionModal(),
-          );
+          return const SafeArea(top: false, child: AddTransactionModal());
         },
       );
       return;
@@ -97,7 +92,6 @@ class _HomePageState extends State<HomePage> {
       _currentIndex = index;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -113,20 +107,14 @@ class _HomePageState extends State<HomePage> {
         type: BottomNavigationBarType.fixed,
         // selectedItemColor: Colors.brown[700],
         // unselectedItemColor: Colors.grey,
-        selectedItemColor: Colors.brown[800],   // 主色，深咖啡
+        selectedItemColor: Colors.brown[800], // 主色，深咖啡
         unselectedItemColor: Colors.brown[300], // 次色，淺咖啡
 
         items: const [
           // 🟫 項目 1：帳務紀錄
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: '紀錄',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: '紀錄'),
           // 🟫 項目 2：帳務分析
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: '分析',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: '分析'),
           // 🟫 項目 3：新增記帳（+ 號）
           BottomNavigationBarItem(
             icon: Icon(Icons.add_circle, size: 32),
@@ -138,10 +126,7 @@ class _HomePageState extends State<HomePage> {
             label: 'ChatBot',
           ),
           // 🟫 項目 5：設定
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: '設定',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
         ],
       ),
     );
@@ -174,5 +159,3 @@ class _HomePageState extends State<HomePage> {
 //     print('我被點擊了！');
 //   }
 // }
-
-

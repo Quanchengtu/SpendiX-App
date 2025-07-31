@@ -35,7 +35,9 @@ class PersonalityApiClient {
   //static const String _baseUrl = 'https://your-api-url.onrender.com/predict'; // TODO: 改成實際 URL
   //static const String _baseUrl = 'https://ai-fintech-apis.onrender.com/predict';
   static const String _baseUrl =
-      'https://ai-fintech-apis.onrender.com/predict/';
+      //'https://ai-fintech-apis.onrender.com/predict/';
+      'https://fastapi-71db.onrender.com/predict';
+  //'http://192.168.242.95:8000/predict/';
 
   Future<PersonalityResult?> predictPersonality({
     required double food,
