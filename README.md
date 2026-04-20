@@ -5,7 +5,7 @@ It combines expense tracking, financial analysis, consumer persona insights, and
 
 > 「Spend」代表花費，「X」象徵無限可能。  
 > SpendiX 的核心目標，是讓記帳不只是紀錄，而是進一步幫助使用者理解自己的消費行為、建立儲蓄習慣，並獲得更個人化的理財建議。  
-> 專案提案中也明確把重點放在智慧記帳、消費人格分析與 AI 儲蓄規劃。:contentReference[oaicite:1]{index=1}
+> 專案提案中也明確把重點放在智慧記帳、消費人格分析與 AI 儲蓄規劃。
 
 ---
 
