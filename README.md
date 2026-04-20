@@ -4,7 +4,7 @@ SpendiX is an AI-powered personal finance and budgeting app built with Flutter.
 It combines expense tracking, financial analysis, consumer persona insights, and AI-assisted savings planning into a single mobile experience.
 
 > 「Spend」代表花費，「X」象徵無限可能。  
-> SpendiX 的核心目標，是讓記帳不只是紀錄，而是進一步幫助使用者理解自己的消費行為、建立儲蓄習慣，並獲得更個人化的理財建議。  
+> SpendiX 的核心目標，是讓記帳不只是紀錄，而是進一步幫助使用者理解自己的消費行為、建立儲蓄習慣，並獲得更個人化的理財建議，協助使用者更有效管理財務。  
 > 專案主軸重點：智慧記帳、消費人格分析、 AI 儲蓄規劃。
 
 ---
@@ -20,7 +20,6 @@ SpendiX aims to solve that by combining:
 - AI chatbot-based savings suggestions
 - savings progress analysis
 
-在提案簡報中，SpendiX 被定位為一款結合 AI 的智慧記帳 App，目標是透過消費資料分析、消費人格辨識與儲蓄建議，協助使用者更有效管理財務。:contentReference[oaicite:2]{index=2}
 
 ---
 
@@ -37,14 +36,14 @@ This repository currently contains a **Flutter mobile app prototype / MVP** with
 - AI savings planning chatbot
 - Settings page for inserting demo data
 
-主程式目前以 `WelcomePage` 為入口，進入後透過底部導覽列切換「紀錄 / 分析 / 記帳 / ChatBot / 設定」五個主要區塊。:contentReference[oaicite:3]{index=3}
+主程式以 `WelcomePage` 為起始入口，進入後透過底部導覽列切換「紀錄 / 分析 / 記帳 / ChatBot / 設定」五個主要區塊。
 
 ---
 
 ## Features
 
 ### 1. Welcome Page
-A clean onboarding-style landing page with SpendiX branding and a button that navigates to the main app.:contentReference[oaicite:4]{index=4}
+A clean onboarding-style landing page with SpendiX branding and a button that navigates to the main app.
 
 ### 2. Manual Transaction Recording
 Users can add income or expense records through a bottom-sheet modal UI.  
@@ -57,7 +56,7 @@ The form currently supports:
 - note input
 - optional saving allocation when recording income
 
-新增記帳時，若使用者在收入模式下勾選加入儲蓄計畫，系統會記錄 `isSaving` 與 `savingAmount`，並在金額超過收入時阻擋提交。
+新增記帳時，若使用者在收入模式下勾選加入儲蓄計畫，系統會記錄 `isSaving` 與 `savingAmount`，並在金額超過收入時阻擋儲蓄計劃提交。
 
 ### 3. Transaction History
 The history page displays monthly records and calculates:
@@ -67,7 +66,7 @@ The history page displays monthly records and calculates:
 - remaining balance
 
 It also supports swipe-to-delete interactions and shows transaction notes.  
-目前刪除功能已實作，但編輯功能仍標示為待實作。
+刪除功能已實作，編輯功能待實作。
 
 ### 4. Monthly Financial Analysis
 The analysis page provides a monthly dashboard including:
@@ -108,7 +107,7 @@ The chatbot page initializes by:
 使用者之後也可以繼續在聊天介面中手動輸入訊息與 AI 互動。
 
 ### 8. Local Demo Data Generation
-The settings page currently includes a utility button to generate fake income and expense records for testing charts and pages.:contentReference[oaicite:11]{index=11}
+The settings page currently includes a utility button to generate fake income and expense records for testing charts and pages.
 
 ---
 
@@ -144,7 +143,7 @@ According to the proposal deck, SpendiX is designed around three major AI direct
 - `intl`
 - `path`
 
-目前 `pubspec.yaml` 可確認此專案已使用 `intl`, `http`, `sqflite`, `path`, `fl_chart`, `cupertino_icons` 等套件。:contentReference[oaicite:14]{index=14}
+ `pubspec.yaml` 設定此專案已使用 `intl`, `http`, `sqflite`, `path`, `fl_chart`, `cupertino_icons` 等套件。
 
 ---
 
@@ -161,7 +160,7 @@ The local transaction model includes:
 - `isSaving`
 - `savingAmount`
 
-SQLite 資料表 `transactions` 目前就是圍繞這組欄位建立，作為本地記帳資料核心。
+SQLite 資料表 `transactions` 圍繞這組欄位建立，作為本地端記帳資料的核心。
 
 ---
 
