@@ -119,8 +119,6 @@ According to the proposal deck, SpendiX is designed around three major AI direct
 - **消費人格分析**：協助使用者認識自己的消費模式
 - **目標儲蓄 / AI 儲蓄規劃**：根據財務狀況與目標提供個人化建議
 
-提案中也提到語音記帳、自動分類與更完整的 AI 理財建議流程；不過就目前這份 Flutter repo 來看，核心已完成的是手動記帳、資料分析、人格 API 串接、儲蓄進度分析與聊天建議，語音記帳與更完整的自動分類仍比較接近規劃方向。
-
 ---
 
 ## Tech Stack
@@ -160,7 +158,7 @@ The local transaction model includes:
 - `isSaving`
 - `savingAmount`
 
-SQLite 資料表 `transactions` 圍繞這組欄位建立，作為本地端記帳資料的核心。
+SQLite 資料表 `transactions` 圍繞這組欄位建立，作為本地端記帳資料核心。
 
 ---
 
