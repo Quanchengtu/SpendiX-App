@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context) {
           // return const SafeArea(
           //   top: false,
-          //   child: AddTransactionModal(), // ✅ 這樣才能讓內部 DraggableScrollableSheet 運作正確
+          //   child: AddTransactionModal(), //  這樣才能讓內部 DraggableScrollableSheet 運作正確
           // );
           return const SafeArea(top: false, child: AddTransactionModal());
         },
@@ -96,10 +96,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // 🟫 主體頁面
+      //  主體頁面
       body: _pages[_currentIndex],
 
-      // 🟫 底部導覽列
+      //  底部導覽列
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xFFFBEBD3), // 米色背景
         currentIndex: _currentIndex,
@@ -111,21 +111,21 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.brown[300], // 次色，淺咖啡
 
         items: const [
-          // 🟫 項目 1：帳務紀錄
+          //  項目 1：帳務紀錄
           BottomNavigationBarItem(icon: Icon(Icons.book), label: '紀錄'),
-          // 🟫 項目 2：帳務分析
+          //  項目 2：帳務分析
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: '分析'),
-          // 🟫 項目 3：新增記帳（+ 號）
+          //  項目 3：新增記帳（+ 號）
           BottomNavigationBarItem(
             icon: Icon(Icons.add_circle, size: 32),
             label: '記帳',
           ),
-          // 🟫 項目 4：ChatBot
+          //  項目 4：ChatBot
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline),
             label: 'ChatBot',
           ),
-          // 🟫 項目 5：設定
+          //  項目 5：設定
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
         ],
       ),
@@ -133,29 +133,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// class HomePage extends StatelessWidget {
-//   const HomePage({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('SpendiX Home'),
-//       ),
-//       body: Center(
-//         child: ElevatedButton(
-//           onPressed: btnClickEvent,
-//           style: ElevatedButton.styleFrom(
-//             backgroundColor: Colors.amber,  // 背景顏色
-//             foregroundColor: Colors.white, // 文字顏色
-//           ),
-//           child: const Text('按鈕'),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   void btnClickEvent() {
-//     print('我被點擊了！');
-//   }
-// }
