@@ -1,4 +1,4 @@
-// 📄 savings_progress_page.dart
+// savings_progress_page.dart
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -16,7 +16,7 @@ class _SavingsProgressPageState extends State<SavingsProgressPage> {
   Map<String, dynamic>? result;
   bool isLoading = true;
 
-  // ✅ 儲蓄計劃設定（之後可從 UI 或 SQLite 取得）
+  // 儲蓄計劃設定（之後可從 UI 或 SQLite 取得）
   final String startDate = "2025-04-01";
   final String endDate = "2025-07-01";
   final double targetAmount = 60000;
